@@ -2,11 +2,14 @@ Friend Class frmMain
     Inherits System.Windows.Forms.Form
 
     Private Plugins() As PluginServices.AvailablePlugin
-    Private objHost As PluginSample.Interfaces.IHost
+    Private Plugins2() As PluginServices.AvailablePlugin
+
+    Friend WithEvents cbSilent As System.Windows.Forms.CheckBox
+    Private objHost As clsHost 'PluginSample.Interfaces.IHost
 
 #Region " Windows Form Designer generated code "
 
-    Public Sub New(ByVal Plugins() As PluginServices.AvailablePlugin)
+    Public Sub New(ByVal Plugins() As PluginServices.AvailablePlugin, ByVal Plugins2() As PluginServices.AvailablePlugin)
         MyBase.New()
 
         'This call is required by the Windows Form Designer.
@@ -14,6 +17,8 @@ Friend Class frmMain
 
         'Add any initialization after the InitializeComponent() call
         Me.Plugins = Plugins
+        Me.Plugins2 = Plugins2
+
         PopulatePluginList()
 
         objHost = New clsHost()
@@ -45,22 +50,23 @@ Friend Class frmMain
     Friend WithEvents lblResult As System.Windows.Forms.Label
     Friend WithEvents cmdCalculate As System.Windows.Forms.Button
     <System.Diagnostics.DebuggerStepThrough()> Private Sub InitializeComponent()
-        Me.lstPlugins = New System.Windows.Forms.ListBox()
-        Me.Label1 = New System.Windows.Forms.Label()
-        Me.txtNumber1 = New System.Windows.Forms.TextBox()
-        Me.Label2 = New System.Windows.Forms.Label()
-        Me.txtNumber2 = New System.Windows.Forms.TextBox()
-        Me.Label3 = New System.Windows.Forms.Label()
-        Me.Label4 = New System.Windows.Forms.Label()
-        Me.lblResult = New System.Windows.Forms.Label()
-        Me.cmdCalculate = New System.Windows.Forms.Button()
+        Me.lstPlugins = New System.Windows.Forms.ListBox
+        Me.Label1 = New System.Windows.Forms.Label
+        Me.txtNumber1 = New System.Windows.Forms.TextBox
+        Me.Label2 = New System.Windows.Forms.Label
+        Me.txtNumber2 = New System.Windows.Forms.TextBox
+        Me.Label3 = New System.Windows.Forms.Label
+        Me.Label4 = New System.Windows.Forms.Label
+        Me.lblResult = New System.Windows.Forms.Label
+        Me.cmdCalculate = New System.Windows.Forms.Button
+        Me.cbSilent = New System.Windows.Forms.CheckBox
         Me.SuspendLayout()
         '
         'lstPlugins
         '
-        Me.lstPlugins.Anchor = (((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
+        Me.lstPlugins.Anchor = CType((((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Bottom) _
                     Or System.Windows.Forms.AnchorStyles.Left) _
-                    Or System.Windows.Forms.AnchorStyles.Right)
+                    Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lstPlugins.IntegralHeight = False
         Me.lstPlugins.Location = New System.Drawing.Point(12, 36)
         Me.lstPlugins.Name = "lstPlugins"
@@ -77,7 +83,7 @@ Friend Class frmMain
         '
         'txtNumber1
         '
-        Me.txtNumber1.Anchor = (System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)
+        Me.txtNumber1.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtNumber1.Location = New System.Drawing.Point(244, 76)
         Me.txtNumber1.Name = "txtNumber1"
         Me.txtNumber1.Size = New System.Drawing.Size(88, 21)
@@ -86,7 +92,7 @@ Friend Class frmMain
         '
         'Label2
         '
-        Me.Label2.Anchor = (System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)
+        Me.Label2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label2.Location = New System.Drawing.Point(244, 56)
         Me.Label2.Name = "Label2"
         Me.Label2.Size = New System.Drawing.Size(84, 16)
@@ -95,7 +101,7 @@ Friend Class frmMain
         '
         'txtNumber2
         '
-        Me.txtNumber2.Anchor = (System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)
+        Me.txtNumber2.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.txtNumber2.Location = New System.Drawing.Point(404, 76)
         Me.txtNumber2.Name = "txtNumber2"
         Me.txtNumber2.Size = New System.Drawing.Size(88, 21)
@@ -104,7 +110,7 @@ Friend Class frmMain
         '
         'Label3
         '
-        Me.Label3.Anchor = (System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)
+        Me.Label3.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label3.Location = New System.Drawing.Point(404, 52)
         Me.Label3.Name = "Label3"
         Me.Label3.Size = New System.Drawing.Size(84, 16)
@@ -113,7 +119,7 @@ Friend Class frmMain
         '
         'Label4
         '
-        Me.Label4.Anchor = (System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)
+        Me.Label4.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.Label4.Location = New System.Drawing.Point(244, 180)
         Me.Label4.Name = "Label4"
         Me.Label4.Size = New System.Drawing.Size(84, 16)
@@ -122,7 +128,7 @@ Friend Class frmMain
         '
         'lblResult
         '
-        Me.lblResult.Anchor = (System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)
+        Me.lblResult.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.lblResult.Font = New System.Drawing.Font("Tahoma", 14.25!, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
         Me.lblResult.Location = New System.Drawing.Point(244, 204)
         Me.lblResult.Name = "lblResult"
@@ -131,22 +137,44 @@ Friend Class frmMain
         '
         'cmdCalculate
         '
-        Me.cmdCalculate.Anchor = (System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right)
+        Me.cmdCalculate.Anchor = CType((System.Windows.Forms.AnchorStyles.Top Or System.Windows.Forms.AnchorStyles.Right), System.Windows.Forms.AnchorStyles)
         Me.cmdCalculate.Location = New System.Drawing.Point(308, 116)
         Me.cmdCalculate.Name = "cmdCalculate"
         Me.cmdCalculate.Size = New System.Drawing.Size(120, 28)
         Me.cmdCalculate.TabIndex = 3
         Me.cmdCalculate.Text = "Calculate"
         '
+        'cbSilent
+        '
+        Me.cbSilent.AutoSize = True
+        Me.cbSilent.Location = New System.Drawing.Point(244, 258)
+        Me.cbSilent.Name = "cbSilent"
+        Me.cbSilent.Size = New System.Drawing.Size(103, 17)
+        Me.cbSilent.TabIndex = 4
+        Me.cbSilent.Text = "Silent Operation"
+        Me.cbSilent.UseVisualStyleBackColor = True
+        '
         'frmMain
         '
         Me.AutoScaleBaseSize = New System.Drawing.Size(5, 14)
         Me.ClientSize = New System.Drawing.Size(512, 299)
-        Me.Controls.AddRange(New System.Windows.Forms.Control() {Me.cmdCalculate, Me.txtNumber1, Me.Label1, Me.lstPlugins, Me.Label2, Me.txtNumber2, Me.Label3, Me.Label4, Me.lblResult})
+        Me.Controls.Add(Me.cbSilent)
+        Me.Controls.Add(Me.cmdCalculate)
+        Me.Controls.Add(Me.txtNumber1)
+        Me.Controls.Add(Me.Label1)
+        Me.Controls.Add(Me.lstPlugins)
+        Me.Controls.Add(Me.Label2)
+        Me.Controls.Add(Me.txtNumber2)
+        Me.Controls.Add(Me.Label3)
+        Me.Controls.Add(Me.Label4)
+        Me.Controls.Add(Me.lblResult)
         Me.Font = New System.Drawing.Font("Tahoma", 8.25!, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, CType(0, Byte))
+        Me.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle
+        Me.MaximizeBox = False
         Me.Name = "frmMain"
         Me.Text = "Plugin Sample"
         Me.ResumeLayout(False)
+        Me.PerformLayout()
 
     End Sub
 
@@ -154,12 +182,19 @@ Friend Class frmMain
 
     Private Sub PopulatePluginList()
         Dim objPlugin As PluginSample.Interfaces.IPlugin
+        Dim objPlugin2 As PluginSample.Interfaces.IPlugin2
+
         Dim intIndex As Integer
 
         'Loop through available plugins, creating instances and adding them to listbox
         For intIndex = 0 To Plugins.Length - 1
             objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(intIndex)), PluginSample.Interfaces.IPlugin)
-            lstPlugins.Items.Add(objPlugin.Name)
+            lstPlugins.Items.Add(New InterfaceType(objPlugin.Name, 1))
+        Next
+
+        For intIndex = 0 To Plugins2.Length - 1
+            objPlugin2 = DirectCast(PluginServices.CreateInstance(Plugins2(intIndex)), PluginSample.Interfaces.IPlugin2)
+            lstPlugins.Items.Add(New InterfaceType(objPlugin2.Name, 2))
         Next
 
         lstPlugins.SelectedIndex = 0
@@ -167,19 +202,54 @@ Friend Class frmMain
 
     Private Sub cmdCalculate_Click(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cmdCalculate.Click
         Dim objPlugin As PluginSample.Interfaces.IPlugin
-        Dim dblResult As Double
+        Dim objPlugin2 As PluginSample.Interfaces.IPlugin2
 
-        'Create and initialize plugin
-        objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lstPlugins.SelectedIndex)), PluginSample.Interfaces.IPlugin)
-        objPlugin.Initialize(objHost)
-
-        'Run calculation and return result
+        Dim dblResult As Double = 0
+        Dim Msg As String = "I really don't like VB"
+        'Create and initialize plugin depending on type
         Try
-            dblResult = objPlugin.Calculate(Integer.Parse(txtNumber1.Text), Integer.Parse(txtNumber2.Text))
+            Dim item As InterfaceType = DirectCast(lstPlugins.SelectedItem, InterfaceType)
+
+            If item.IType = 1 Then
+                Msg = "Error performing calculation. Please ensure you have entered two integers in to the textboxes."
+                objPlugin = DirectCast(PluginServices.CreateInstance(Plugins(lstPlugins.SelectedIndex)), PluginSample.Interfaces.IPlugin)
+                objPlugin.Initialize(objHost)
+                dblResult = objPlugin.Calculate(Integer.Parse(txtNumber1.Text), Integer.Parse(txtNumber2.Text))
+            Else
+                Msg = "Error performing calculation. Please ensure you have entered a number into the textbox."
+                objPlugin2 = DirectCast(PluginServices.CreateInstance(Plugins2(lstPlugins.SelectedIndex - Plugins.Length)), PluginSample.Interfaces.IPlugin2)
+                objPlugin2.Initialize(objHost)
+                dblResult = objPlugin2.Calculate(Double.Parse(txtNumber1.Text))
+            End If
         Catch
-            MessageBox.Show("Error performing calculation. Please ensure you have entered two integers in to the textboxes.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
+            MessageBox.Show(Msg, Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Exclamation)
             Exit Sub
         End Try
+
         lblResult.Text = dblResult.ToString()
     End Sub
+
+    Private Sub cbSilent_CheckedChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles cbSilent.CheckedChanged
+        objHost.Silent = cbSilent.Checked
+    End Sub
+
+    Private Sub lstPlugins_SelectedIndexChanged(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles lstPlugins.SelectedIndexChanged
+        'Get the InterfaceType for the selected Item
+        Dim item As InterfaceType = DirectCast(lstPlugins.SelectedItem, InterfaceType)
+        txtNumber2.Enabled = item.IType <> 2
+    End Sub
+End Class
+
+Friend Class InterfaceType
+    Public Name As String
+    Public IType As Integer
+
+    Public Sub New(ByVal Name As String, ByVal IType As Integer)
+        Me.Name = Name
+        Me.IType = IType
+    End Sub
+
+    Public Overrides Function ToString() As String
+        Return Me.Name
+    End Function
 End Class

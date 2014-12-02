@@ -9,7 +9,7 @@ Public Class Class1
 
     Public ReadOnly Property Name() As String Implements PluginSample.Interfaces.IPlugin.Name
         Get
-            Return "Example Plugin 1 - Adds two numbers"
+            Return "Addition (VB.NET)"
         End Get
     End Property
 
